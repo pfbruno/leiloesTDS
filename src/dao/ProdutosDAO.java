@@ -16,25 +16,35 @@ public class ProdutosDAO {
     ResultSet resultset;
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
-    public void cadastrarProduto (ProdutosDTO produto){
-        try{
-            
+    public boolean cadastrarProduto(ProdutosDTO produto) {
+    conn = null;
+    PreparedStatement query = null;
+
+    try {
         conn = new conectaDAO().connectDB();
-        
+
         String sql = "INSERT INTO produtos (nome, valor, status) VALUES (?, ?, ?)";
-        PreparedStatement query = conn.prepareStatement(sql);
-        
+        query = conn.prepareStatement(sql);
+
         query.setString(1, produto.getNome());
         query.setDouble(2, produto.getValor());
         query.setString(3, produto.getStatus());
 
-        query.execute();
-
+        int linhasAfetadas = query.executeUpdate();
+        return linhasAfetadas > 0; // Retorna true se ao menos uma linha foi afetada
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Erro ao cadastrar produto: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        return false;
+    } finally {
+        try {
+            if (query != null) query.close();
+            if (conn != null) conn.close();
         } catch (SQLException e) {
-            System.out.println("e");
+            JOptionPane.showMessageDialog(null, "Erro ao fechar recursos: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        
     }
+}
+
     
     public ArrayList<ProdutosDTO> listarProdutos(){
         
