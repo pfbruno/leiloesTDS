@@ -3,6 +3,7 @@ package view;
 
 import dto.ProdutosDTO;
 import dao.ProdutosDAO;
+import javax.swing.JOptionPane;
 
 public class cadastroVIEW extends javax.swing.JFrame {
 
@@ -141,12 +142,23 @@ public class cadastroVIEW extends javax.swing.JFrame {
         String nome = cadastroNome.getText();
         String valor = cadastroValor.getText();
         String status = "A Venda";
+        
         produto.setNome(nome);
         produto.setValor(Integer.parseInt(valor));
         produto.setStatus(status);
         
         ProdutosDAO produtodao = new ProdutosDAO();
         produtodao.cadastrarProduto(produto);
+        boolean sucesso = produtodao.cadastrarProduto(produto);
+
+if (sucesso) {
+    JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    cadastroNome.setText("");
+    cadastroValor.setText("");
+} else {
+    JOptionPane.showMessageDialog(this, "Erro ao cadastrar o produto.", "Erro", JOptionPane.ERROR_MESSAGE);
+}
+
         
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
