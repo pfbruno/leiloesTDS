@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class conectaDAO {
+
+    static Connection getConnection() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     public Connection connectDB(){
         Connection conn = null;
