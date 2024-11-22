@@ -44,8 +44,8 @@ public class ProdutosDAO {
         }
     }
 }
-
     
+
      public ArrayList<ProdutosDTO> listarProdutos() {
         String sql = "SELECT * FROM produtos";
         ArrayList<ProdutosDTO> lista = new ArrayList<>();
