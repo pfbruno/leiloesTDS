@@ -15,7 +15,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         initComponents();
         listarProdutos();
     }
-
+//eu amo a mirian, amo mais que tudo e mais que o ygor
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,10 +131,37 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
+         try {
+        // Obtem o valor do campo de texto (id_produto_venda)
+        String id = id_produto_venda.getText().trim();
+        
+        // Verifica se o campo não está vazio e se o valor é numérico
+        if (id.isEmpty() || !id.matches("\\d+")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Insira um ID válido.");
+            return;
+        }
+        
+        // Converte o ID para um número inteiro
+        int idProduto = Integer.parseInt(id);
         
         ProdutosDAO produtosdao = new ProdutosDAO();
         
+        // Verifica se a venda foi realizada com sucesso
+        boolean sucesso = produtosdao.venderProduto(idProduto);
+        
+        if (sucesso) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Produto vendido com sucesso.");
+            listarProdutos(); // Atualiza a lista de produtos
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao vender o produto. Verifique o ID.");
+        }
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
+    }
+
+    
+
         //produtosdao.venderProduto(Integer.parseInt(id));
         listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
